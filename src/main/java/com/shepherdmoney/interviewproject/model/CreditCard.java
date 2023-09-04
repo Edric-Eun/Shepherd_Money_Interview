@@ -27,6 +27,10 @@ public class CreditCard {
 
     // TODO: Credit card's owner. For detailed hint, please see User class
 
+    @ManyToOne(fetch = FetchType.LAZY, mappedBy = "owner")
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private User owner;
+
     // TODO: Credit card's balance history. It is a requirement that the dates in the balanceHistory 
     //       list must be in chronological order, with the most recent date appearing first in the list. 
     //       Additionally, the first object in the list must have a date value that matches today's date, 
@@ -37,4 +41,7 @@ public class CreditCard {
     //         {date: '2023-04-11', balance: 1000},
     //         {date: '2023-04-10', balance: 800}
     //       ]
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "creditCard")
+    @OrderBy("date DESC")
+    private List<BalanceHistory> balanceHistories;
 }
